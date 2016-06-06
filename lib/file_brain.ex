@@ -2,9 +2,10 @@ use Croma
 
 defmodule Lambda.FileBrain do
   alias Croma.Result, as: R
+
   @random_bits_length 2
   @brain_path Path.expand(Path.join([".", "brain"]))
-  @type error :: {:error, File.posix}
+
   @type find_t :: map | [String.t]
 
   defun find(db_name :: v[String.t], col_name :: v[String.t], id :: nil | String.t \\ nil) :: R.t(find_t) do
@@ -57,8 +58,8 @@ defmodule Lambda.FileBrain do
 
   defp remove_path(path) do
     case File.rm_rf(path) do
-      {:ok, _}               -> {:ok, String.replace_prefix(path, @brain_path <> "/", "")}
-      {:error, _posix, file} -> {:error, file}
+      {:ok, _}                -> {:ok, String.replace_prefix(path, @brain_path <> "/", "")}
+      {:error, reason, _file} -> {:error, reason}
     end
   end
 
