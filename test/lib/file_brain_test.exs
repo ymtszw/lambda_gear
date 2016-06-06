@@ -29,6 +29,7 @@ defmodule Lambda.FileBrainTest do
 
   test "find/3 should get doc list within a col" do
     {:ok, id1} = FB.insert(@db, @col, @d)
+    :timer.sleep(1) # wait 1 millisec to ensure timestamp ordering
     {:ok, id2} = FB.insert(@db, @col, @d)
     {:ok, list} = FB.find(@db, @col)
     assert list == [id1, id2] # IDs sorted by time
@@ -45,11 +46,12 @@ defmodule Lambda.FileBrainTest do
 
   test "remove/3 should remove a doc" do
     {:ok, id1} = FB.insert(@db, @col, @d)
+    :timer.sleep(1) # wait 1 millisec to ensure timestamp ordering
     {:ok, id2} = FB.insert(@db, @col, @d)
     {:ok, list1} = FB.find(@db, @col)
     assert list1 == [id1, id2]
-    {:ok, path} = FB.remove(@db, @col, id1)
-    assert path == Path.join([@db, @col, id1])
+    {:ok, id3} = FB.remove(@db, @col, id1)
+    assert id3 == id1
     {:ok, list2} = FB.find(@db, @col)
     assert list2 == [id2]
   end
@@ -66,7 +68,7 @@ defmodule Lambda.FileBrainTest do
   test "drop_col/2 should delete col" do
     {:ok, id} = FB.insert(@db, @col, @d)
     {:ok, col} = FB.drop_col(@db, @col)
-    assert col == @db <> "/" <> @col
+    assert col == @col
     assert {:error, :enoent} == FB.find(@db, @col, id)
     db_path = Path.join([FB.location, @db])
     assert File.exists?(db_path)

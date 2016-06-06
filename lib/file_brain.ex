@@ -4,7 +4,7 @@ defmodule Lambda.FileBrain do
   alias Croma.Result, as: R
 
   @random_bits_length 2
-  @brain_path Path.expand(Path.join([".", "brain"]))
+  @brain_path Path.expand(Path.join([".", "brain", Atom.to_string(Mix.env)]))
 
   @type find_t :: map | [String.t]
 
@@ -58,7 +58,7 @@ defmodule Lambda.FileBrain do
 
   defp remove_path(path) do
     case File.rm_rf(path) do
-      {:ok, _}                -> {:ok, String.replace_prefix(path, @brain_path <> "/", "")}
+      {:ok, _}                -> {:ok, Path.basename(path)}
       {:error, reason, _file} -> {:error, reason}
     end
   end
