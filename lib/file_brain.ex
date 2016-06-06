@@ -50,6 +50,7 @@ defmodule Lambda.FileBrain do
   end
 
   # Time-based sortable random ID
+  # Sortability is limited to milliseconds order. Consecutive inserts within a millisecond will be sorted by random bits (thus random)
   defp generate_id do
     random_bits   = Base.encode16(:crypto.strong_rand_bytes(@random_bits_length))
     timestamp_str = SolomonLib.Time.now |> SolomonLib.Time.to_gregorian_milliseconds |> Integer.to_string(36)
