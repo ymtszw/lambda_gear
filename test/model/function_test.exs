@@ -18,7 +18,9 @@ defmodule Lambda.Model.FunctionTest do
 
     {:ok, id3}   = Function.create(@test_d)
     {:ok, list1} = Function.all
+    {:ok, c1}    = Function.count
     assert list1 == [id1, id3]
+    assert c1    == 2
 
     {:ok, _}     = Function.delete(id1)
     {:ok, list2} = Function.all
