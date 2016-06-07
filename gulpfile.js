@@ -6,7 +6,7 @@ var concat    = require('gulp-concat')
 var path      = require('path');
 var es        = require('event-stream');
 
-gulp.task('default', ['compress-js', 'compress-css']);
+gulp.task('default', ['compress-js', 'compress-css', 'put-templates']);
 
 gulp.task('watch', ['default', 'do_watch']);
 
@@ -17,7 +17,15 @@ gulp.task('do_watch', function() {
   gulp.watch('web/static/scss/*.scss', function() {
     gulp.run('compress-css');
   });
+  gulp.watch('web/static/js/templates/**/*.html', function() {
+    gulp.run('put-templates');
+  });
 })
+
+gulp.task('put-templates', function() {
+  return gulp.src(['web/static/js/templates/**/*.html'])
+    .pipe(gulp.dest('priv/static/js/templates'))
+});
 
 gulp.task('compress-js', function() {
   return gulp.src(['web/static/**/*.js'])
