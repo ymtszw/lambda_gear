@@ -6,4 +6,6 @@ defmodule Lambda.Router do
   get  "/functions",     Function, :index
   get  "/functions/:id", Function, :get
   post "/functions",     Function, :create
+
+  get "/*path",  Driver, :execute
 end
