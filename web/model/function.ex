@@ -11,4 +11,6 @@ defmodule Lambda.Model.Function do
   def create(id \\ nil, doc), do: DB.insert(@col_name, id, doc)
   def update(id, doc),        do: DB.update(@col_name, id, doc)
   def delete(id),             do: DB.remove(@col_name, id)
+
+  Croma.Result.define_bang_version_of(find: 1, all: 0, count: 0, create: 2, update: 2, delete: 1)
 end

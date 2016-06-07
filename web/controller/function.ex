@@ -11,6 +11,13 @@ defmodule Lambda.Controller.Function do
     end
   end
 
+  def index(conn) do
+    fetched_list =
+      Function.all!
+      |> Enum.into(%{}, fn id -> {id, Function.find!(id)} end)
+    json(conn, 200, %{items: fetched_list})
+  end
+
   def create(%Conn{request: %Req{body: body}} = conn) do
     contents = Map.take(body, ["title", "function_body", "path"])
     {:ok, id} = Function.create(contents)

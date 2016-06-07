@@ -10,6 +10,20 @@ defmodule Lambda.Controller.FunctionTest do
 
   setup do: on_exit(&Lambda.DataBase.drop_db/0)
 
+  test "GET /functions should get all functions" do
+    ids = for _ <- 0..9 do
+      :timer.sleep(1)
+      F.create(@test_body) |> Croma.Result.get!
+    end
+
+    res = Req.get("/functions")
+    assert res.status == 200
+    res_body = res.body |> Poison.decode!
+    keys = Map.keys(res_body["items"])
+    assert Enum.count(keys) == 10
+    assert keys == ids
+  end
+
   test "GET /functions/:id should get a function" do
     {:ok, id} = F.create(@test_body)
 
