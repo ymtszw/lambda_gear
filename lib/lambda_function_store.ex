@@ -18,12 +18,12 @@ defmodule Lambda.FunctionStore do
 
   def init(:ok) do
     _table_id = :ets.new(@table_name, [:public, :named_table, {:read_concurrency, true}])
-    :ets.insert(@table_name, load_codes)
+    :ets.insert(@table_name, {:funcs, load_codes})
     {:ok, :polling, @interval}
   end
 
   def handle_info(:timeout, _old_funcs) do
-    :ets.insert(@table_name, load_codes)
+    :ets.insert(@table_name, {:funcs, load_codes})
     {:noreply, :polling, @interval}
   end
 
@@ -35,7 +35,6 @@ defmodule Lambda.FunctionStore do
       _                                -> true
     end)
     |> Enum.into(%{}, fn {id, %{"path" => path, "code" => code}} -> {path, {id, code}} end)
-    |> Map.to_list
   end
 
   # APIs
@@ -44,9 +43,7 @@ defmodule Lambda.FunctionStore do
   Finds and returns a function of the given path from currently stored functions
   """
   defun find(path :: String.t) :: nil | map do
-    case :ets.lookup(@table_name, path) do
-      []             -> nil
-      [{_, id_code}] -> id_code
-    end
+    [{_, funcs}] = :ets.lookup(@table_name, :funcs)
+    funcs[path]
   end
 end
