@@ -8,8 +8,9 @@ function loadFuncs() {
     $.each(json.items, function(id, func) {
       $('#list').loadTemplate('static/js/templates/list_card.html', {
         title: func.title || '(No title)',
-        text: func.path,
-        code: func.code
+        text: 'Path: /' + func.path,
+        code: func.code,
+        link: '/' + func.path
       }, {append: true})
     });
   });
