@@ -1,7 +1,7 @@
 defmodule Lambda.Router do
   use SolomonLib.Router
 
-  get "/hello", Hello, :hello
+  get "/", Hello, :root
 
   get  "/functions",     Function, :index
   get  "/functions/:id", Function, :get

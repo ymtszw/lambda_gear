@@ -5,7 +5,7 @@ defmodule Lambda.Controller.FunctionTest do
   @test_body %{
     "title" => "function1",
     "path"  => "/path",
-    "function_body" => "body"
+    "code"  => "def code(conn), do: (conn, 200, %{result: :good}) end",
   }
 
   setup do: on_exit(&Lambda.DataBase.drop_db/0)
@@ -30,9 +30,7 @@ defmodule Lambda.Controller.FunctionTest do
     res = Req.get("/functions/#{id}")
     assert res.status == 200
     res_body = res.body |> Poison.decode!
-    assert res_body["title"]         == "function1"
-    assert res_body["path"]          == "/path"
-    assert res_body["function_body"] == "body"
+    assert res_body == @test_body
   end
 
   test "GET /functions/:id should return not found for nonexistent id" do
@@ -49,8 +47,6 @@ defmodule Lambda.Controller.FunctionTest do
 
     assert F.count |> Croma.Result.get! == 1
     {:ok, contents} = F.find(res_body["id"])
-    assert contents["title"]         == "function1"
-    assert contents["path"]          == "/path"
-    assert contents["function_body"] == "body"
+    assert contents == @test_body
   end
 end

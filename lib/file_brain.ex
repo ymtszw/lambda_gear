@@ -12,7 +12,8 @@ defmodule Lambda.FileBrain do
     case id do
       nil       ->
         col_path = Path.join([@brain_path, db_name, col_name])
-        File.ls(col_path)
+        list = File.ls(col_path) |> R.get([])
+        {:ok, list}
       file_name ->
         doc_path = Path.join([@brain_path, db_name, col_name, file_name])
         File.read(doc_path) |> R.map(&Poison.decode!/1)

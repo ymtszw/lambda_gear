@@ -8,7 +8,9 @@ var es        = require('event-stream');
 
 gulp.task('default', ['compress-js', 'compress-css']);
 
-gulp.task('watch', function() {
+gulp.task('watch', ['default', 'do_watch']);
+
+gulp.task('do_watch', function() {
   gulp.watch('web/static/**/*.js', function() {
     gulp.run('compress-js');
   });

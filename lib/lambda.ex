@@ -6,6 +6,7 @@ defmodule Lambda do
   def children do
     [
       # gear-specific workers/supervisors
+      Supervisor.Spec.worker(Lambda.FunctionStore, []),
     ]
   end
 
