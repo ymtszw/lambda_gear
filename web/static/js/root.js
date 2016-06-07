@@ -3,7 +3,7 @@ function loadFuncs() {
     $.each(json.items, function(id, func) {
       $('#list').loadTemplate('static/js/templates/list_card.html', {
         title: func.title || '(No title)',
-        text: 'Path: /' + func.path,
+        text: func.path,
         code: func.code,
         link: '/' + func.path
       }, {append: true})
@@ -12,7 +12,9 @@ function loadFuncs() {
 };
 
 function showForm() {
-  $('#contents').loadTemplate('static/js/templates/form.html', {});
+  $('#contents').loadTemplate('static/js/templates/form.html', {
+    host: location.href
+  });
 };
 
 function showList() {

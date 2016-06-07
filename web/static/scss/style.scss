@@ -5,11 +5,11 @@
 
 html,body{
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 #main {
-  width: 60%;
+  width: 100%;
   text-align: center;
   margin: 20px auto;
 
@@ -20,14 +20,18 @@ html,body{
   }
 
   #form {
-    text-align: left;
+    width: 60%;
+    margin: 0 auto;
   }
 
   #list {
+    width: 100%;
+    margin: 0;
     text-align: left;
 
     .panel {
-      margin: 0 5px 10px;
+      max-height: 10%;
+      margin-bottom: 10px;
 
       .try {
         text-align: right;
