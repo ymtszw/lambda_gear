@@ -5,7 +5,7 @@ defmodule Lambda.Controller.FunctionTest do
   @test_body %{
     "title" => "function1",
     "path"  => "/path",
-    "code"  => "def code(conn), do: (conn, 200, %{result: :good}) end",
+    "code"  => "handle(conn)",
   }
 
   setup do: on_exit(&Lambda.DataBase.drop_db/0)
