@@ -8,6 +8,20 @@ html,body{
   overflow: hidden;
 }
 
+#main {
+  width: 80%;
+  text-align: center;
+  margin: 20px auto;
+
+  #title {
+    height: 204px;
+    background: url('#{$imgDir}lambda.png') center no-repeat;
+  }
+
+  #form {
+  }
+}
+
 .container-fluid{
   position:relative;
   padding: 0;

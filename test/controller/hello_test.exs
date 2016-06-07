@@ -7,6 +7,6 @@ defmodule Lambda.Controller.HelloTest do
     assert response.headers["content-type"] == "text/html"
     body = response.body
     assert String.starts_with?(body, "<!DOCTYPE html>")
-    assert String.contains?(body, "<div id=\"main\"></div>")
+    assert String.contains?(body, "<div id=\"main\">")
   end
 end
