@@ -64,5 +64,5 @@ defmodule Lambda.FileBrain do
     end
   end
 
-  defpt location, do: @brain_path
+  def location, do: @brain_path
 end

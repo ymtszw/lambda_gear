@@ -11,5 +11,5 @@ defmodule Lambda.DataBase do
   def remove(col, id),             do: FB.remove(@db_name, col, id)
 
   def drop_col(col), do: FB.drop_col(@db_name, col)
-  defpt drop_db, do: FB.drop_db(@db_name)
+  def drop_db,       do: FB.drop_db( @db_name)
 end

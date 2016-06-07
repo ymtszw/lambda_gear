@@ -3,5 +3,6 @@ defmodule Lambda.Router do
 
   get "/hello", Hello, :hello
 
-  post "/functions", Function, :create
+  get  "/functions/:id", Function, :get
+  post "/functions",     Function, :create
 end
