@@ -15,11 +15,11 @@ defmodule Req do
 
   def post_json(path, json) do
     body = Poison.encode!(json)
-    post(path, [{"content-type", "application/json"}], body)
+    post(path, %{"content-type" => "application/json"}, body)
   end
 
   def post_form(path, query) do
     body = URI.encode_query(query)
-    post(path, [{"content-type", "application/x-www-form-urlencoded"}], body)
+    post(path, %{"content-type" => "application/x-www-form-urlencoded"}, body)
   end
 end
