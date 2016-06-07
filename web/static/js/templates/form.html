@@ -11,5 +11,7 @@
     <label for="function_code">Code</label>
     <textarea class="form-control" id="function_code" rows="10"></textarea>
   </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="btn btn-default" onclick="showList()">Cancel</div>
+  <div class="btn btn-primary" onclick="postFunc()">Submit Function</div>
+  <div class="text-muted text-danger" id="error"></div>
 </form>
