@@ -15,7 +15,7 @@ defmodule Lambda.Controller.Driver do
 
   def do_execute(conn, id, code) do
     try do
-      {res, _binding} = Code.eval_string(code, [conn: conn])
+      {res, _binding} = Code.eval_string(code, [conn: conn], [])
       res
     rescue
       e ->

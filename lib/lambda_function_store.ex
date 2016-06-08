@@ -3,14 +3,14 @@ use Croma
 defmodule Lambda.FunctionStore do
   @moduledoc """
   Poll the DB, periodically reloading persisted functions into ETS.
-  Use `find/1` to lookup per ID.
+  Use `find/1` to lookup per path.
   """
 
   use GenServer
   alias Lambda.Model.Function, as: Func
 
-  @table_name :lambda_code_store
-  @interval if(Mix.env == :test, do: 1_000, else: 3_000)
+  @table_name :lambda_function_store
+  @interval if(Mix.env == :test, do: 1_000, else: 30_000)
 
   def start_link do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
