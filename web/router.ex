@@ -1,6 +1,8 @@
 defmodule Lambda.Router do
   use SolomonLib.Router
 
+  static_prefix "/static"
+
   get "/", Hello, :root
 
   get  "/functions",     Function, :index
