@@ -12,22 +12,22 @@ defmodule Lambda.FunctionStore do
   @table_name :lambda_function_store
   @interval if(Mix.env == :test, do: 1_000, else: 30_000)
 
-  def start_link do
+  def start_link() do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
   end
 
   def init(:ok) do
     _table_id = :ets.new(@table_name, [:public, :named_table, {:read_concurrency, true}])
-    :ets.insert(@table_name, {:funcs, load_codes})
+    :ets.insert(@table_name, {:funcs, load_codes()})
     {:ok, :polling, @interval}
   end
 
   def handle_info(:timeout, _old_funcs) do
-    :ets.insert(@table_name, {:funcs, load_codes})
+    :ets.insert(@table_name, {:funcs, load_codes()})
     {:noreply, :polling, @interval}
   end
 
-  defp load_codes do
+  defp load_codes() do
     Func.all!
     |> Enum.map(fn id -> {id, Func.find!(id)} end)
     |> Enum.reject(fn

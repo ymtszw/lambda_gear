@@ -21,7 +21,7 @@ defmodule Lambda.FileBrain do
   end
 
   defun insert(db_name :: v[String.t], col_name :: v[String.t], id :: nil | String.t \\ nil, doc :: v[map]) :: R.t(String.t) do
-    file_name = id || generate_id
+    file_name = id || generate_id()
     col_path = Path.join([@brain_path, db_name, col_name])
     File.mkdir_p!(col_path) # Idempotent. Rarely fails
     doc_path = Path.join(col_path, file_name)
@@ -52,7 +52,7 @@ defmodule Lambda.FileBrain do
 
   # Time-based sortable random ID
   # Sortability is limited to milliseconds order. Consecutive inserts within a millisecond will be sorted by random bits (thus random)
-  defp generate_id do
+  defp generate_id() do
     random_bits   = Base.encode16(:crypto.strong_rand_bytes(@random_bits_length))
     timestamp_str = SolomonLib.Time.now |> SolomonLib.Time.to_gregorian_milliseconds |> Integer.to_string(36)
     timestamp_str <> random_bits
@@ -65,5 +65,5 @@ defmodule Lambda.FileBrain do
     end
   end
 
-  def location, do: @brain_path
+  def location(), do: @brain_path
 end
